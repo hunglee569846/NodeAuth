@@ -104,13 +104,13 @@ function login(req, res) {
                     if (result === true) {
                         return accessToken.accessToken(payload);
                     }else 
-                        return res.status(403).json('incorrect password').end();
+                        return false;
             })
             .then((result) => {
-                if (result) {
+                console.log("====accestoken result: ", result);
+                if (result === true || result.access_token !== undefined && result.refresh_access_token !== undefined) {
                     token.access_token = result.access_token;
                     token.refresh_access_token = result.refresh_access_token;
-
                     return user.registToken(token);
                 }else if (result === false) {
                     return false;
@@ -119,10 +119,10 @@ function login(req, res) {
             .then(result=>{
                 if(result.rowCount > 0 ){
                     res.status(200).json(token).end();
-                }else res.status(403).json({});
+                }else if (result === false) res.status(403).json('incorrect password').end();
             })
             .catch(err => {
-                res.status(500).json({});
+                res.status(500).json({err});
             })
 
     })
