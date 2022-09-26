@@ -9,9 +9,8 @@ const bodyPaser = require('body-parser');
 //khoi dong middleware
 
 app.use(express.json())
-
-app.use(bodyPaser.json())
 app.use(bodyPaser.urlencoded({extended: true}))
+app.use(bodyPaser.json())
 
 app.get('/post', (req,res)=> {
     res.json({post: "my post"})
