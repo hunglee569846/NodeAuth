@@ -15,6 +15,7 @@ function accessToken(param){
                 username: param.username,
                 userid: param.userid,
             }
+            console.log("====payload: ", payload);
             let responseToken = {
                 access_token: jwt.sign(payload,process.env.ACCES_TOKEN_SECRET,{expiresIn: '30s'},payload.userid),
                 refresh_access_token: jwt.sign(payload,process.env.REFRESH_TOKEN_SECRET,'',payload.userid)

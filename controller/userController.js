@@ -92,8 +92,8 @@ function login(req, res) {
         user.selectUserbyUsername(userParam)
             .then(result => {
                 if (result.rows) {
-                    username = result.rows[0].user_name;
-                    userid = result.rows[0].user_id;
+                    payload.username = result.rows[0].user_name;
+                    payload.userid = result.rows[0].user_id;
                     
                     token.useruuid= result.rows[0].user_id;
                     return bcryptPassword.verifyPassord(result.rows[0].hash_password, req.query.password);
