@@ -103,7 +103,7 @@ function login(req, res) {
                     if (result === true) {
                         return accessToken.accessToken(payload);
                     }else 
-                        return false;
+                        throw new Error("incorrect password!");
             })
             .then((result) => {
                 if (result === true || result.access_token !== undefined && result.refresh_access_token !== undefined) {
@@ -120,7 +120,7 @@ function login(req, res) {
                 }else if (result === false) res.status(403).json('incorrect password').end();
             })
             .catch(err => {
-                res.status(500).json({err});
+                res.status(403).json(err).end();
             })
 
     })

@@ -103,8 +103,10 @@ function login(req, res) {
                 console.log("====boolVerifyPass===========: ",result);
                     if (result === true) {
                         return accessToken.accessToken(payload);
-                    }else 
-                        return false;
+                    }else { // res.status(405).json({error: 'incorrect password'}).end();
+                        throw(new Error("incorrect password!"));
+                        // return;
+                    } 
             })
             .then((result) => {
                 console.log("====accestoken result: ", result);
@@ -113,7 +115,7 @@ function login(req, res) {
                     token.refresh_access_token = result.refresh_access_token;
                     return user.registToken(token);
                 }else if (result === false) {
-                    return false;
+                    return false; 
                 }
             })
             .then(result=>{
@@ -122,7 +124,7 @@ function login(req, res) {
                 }else if (result === false) res.status(403).json('incorrect password').end();
             })
             .catch(err => {
-                res.status(500).json({err});
+                res.status(500).json(err);
             })
 
     })
